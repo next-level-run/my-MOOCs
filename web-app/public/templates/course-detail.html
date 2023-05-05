@@ -1,0 +1,116 @@
+
+<div class="header">
+  <div class="bounds">
+    <h1 class="header--logo">
+      <a href="#!">My MOOCs</a>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 7 13" xml:space="preserve" class="chevron">
+        <polygon points="0.7,13 0,12.3 5.6,6.5 0,0.7 0.7,0 7,6.5  "/>
+      </svg>
+      <span class="selected">{{ vm.course.title }}</span>
+    </h1>
+    <user-nav></user-nav>
+  </div>
+</div>
+
+<div class="actions--bar" ng-show="vm.userCanEdit">
+  <div class="bounds">
+    <div class="grid-100">
+      <a class="button" href="#!/update/{{ vm.courseId }}">Modifier MOOC</a>
+    </div>
+  </div>
+</div>
+
+<div class="bounds course--detail">
+
+  <div class="grid-66">
+    <div class="course--header">
+      <h4 class="course--label">MOOC</h4>
+      <h3 class="course--title">{{ vm.course.title }}</h3>
+      <p>Realise par {{ vm.course.user.username }}</p>
+    </div>
+    <div class="course--description">
+      <div ng-bind-html="vm.course.description | lineReturnsToParagraphs"></div>
+      <ol>
+        <li ng-repeat="step in vm.course.steps">
+          <h3>{{ step.title }}</h3>
+          <div ng-bind-html="step.description | lineReturnsToParagraphs"></div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="grid-25 grid-right">
+    <a class="course--review-score" ng-click="vm.scrollTo('reviews')">
+      <h4 class="review-count">
+        Notation moyenne
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 13 12" xml:space="preserve" class="arrow-right">
+          <polygon points="7.2,0 6.4,0.8 10.9,5.4 0,5.4 0,6.6 10.9,6.6 6.4,11.2 7.2,12 13,6 " />
+        </svg>
+      </h4>
+      <rating value="vm.course.overallRating"></rating>
+    </a>
+    <div class="course--stats">
+      <ul class="course--stats--list">
+        <li class="course--stats--list--item" ng-show="vm.course.estimatedTime">
+          <h4>Duree estimee</h4>
+          <h3>{{ vm.course.estimatedTime }}</h3>
+        </li>
+        <li class="course--stats--list--item" ng-show="vm.course.materialsNeeded">
+          <h4>Materiel requis</h4>
+          <div markdown="vm.course.materialsNeeded"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<a name="reviews"></a>
+
+<div class="course--reviews" id="reviews">
+  <div class="bounds">
+
+    <div class="grid-66">
+
+      <h2>{{ vm.numberOfReviewsDisplayText }}</h2>
+
+      <ul class="course--reviews--list">
+        <li ng-repeat="review in vm.course.reviews">
+          <div class="course--reviews--commentor">
+            <div class="avatar"></div>
+            <h4>{{ review.user.username }}</h4>
+            <p>Ajoute le : {{ review.postedOn | date:'M/d/yy h:mm a' }}</p>
+            <rating value="review.rating" is-user-rating="true"></rating>
+          </div>
+          <div ng-bind-html="review.review | lineReturnsToParagraphs"></div>
+          <form ng-show="vm.canDeleteReview(review)">
+            <button class="button"
+              ng-click="vm.deleteReview(review._id)">Supprimer l'avis</button>
+          </form>
+        </li>
+      </ul>
+
+      <form class="course--reviews--form" ng-show="vm.canPostReview()">
+        <h3>Donner votre avis</h3>
+        <validation-errors ng-show="vm.hasUserReviewValidationErrors"
+          errors="vm.userReviewValidationErrors"></validation-errors>
+        <rating allow-edit="true" value="vm.userReview.rating"></rating>
+        <fieldset>
+          <textarea placeholder="Votre avis" ng-model="vm.userReview.review"></textarea>
+        </fieldset>
+        <button class="button" ng-click="vm.postReview()">Ajouter un avis</button>
+      </form>
+
+    </div>
+
+    <div class="grid-25 grid-right">
+      <div class="course--review-score">
+        <h4 class="review-count">
+          Notation moyenne
+        </h4>
+        <rating value="vm.course.overallRating"></rating>
+      </div>
+    </div>
+
+  </div>
+</div>

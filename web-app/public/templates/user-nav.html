@@ -1,0 +1,8 @@
+<nav ng-hide="isAuthenticated">
+  <a class="signup" href="#!/signup">S'inscrire</a>
+  <a class="signout" href="#!/signin">Se connecter</a>
+</nav>
+<nav ng-show="isAuthenticated">
+  <a herf="#">Bienvenue {{ username }}!</a>
+  <a class="signout" href="#!/signout">Se déconnecter</a>
+</nav>
