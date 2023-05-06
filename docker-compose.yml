@@ -24,6 +24,8 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@database:27017
+    volumes:
+      - ./api:/api
 
   database:
     image: mongo:3.7.9
