@@ -13,7 +13,11 @@ services:
       - ./web-app:/web-app
 
   api:
-    build: api
+    build:
+      context: api
+      target: dev
+    volumes:
+      - ./api:/api
     stdin_open: true
     tty: true
     depends_on:
