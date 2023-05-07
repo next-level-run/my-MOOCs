@@ -1,5 +1,4 @@
 FROM node:12.22-buster-slim AS base
-
 WORKDIR /web-app
 COPY . .
 RUN npm ci
