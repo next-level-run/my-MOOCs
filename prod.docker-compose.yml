@@ -11,10 +11,6 @@ services:
       - database
     ports:
       - 80:80
-    # ports:
-    #   - "3001:3001"
-    # volumes:
-    #   - ./web-app:/web-app
 
   api:
     build:
