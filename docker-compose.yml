@@ -2,9 +2,7 @@ version: '3'
 
 services:
   web:
-    build:
-      context: web-app
-      target: dev
+    build: web-app
     stdin_open: true
     tty: true
     depends_on:
