@@ -11,9 +11,7 @@ services:
       - database
 
   api:
-    build:
-      context: api
-      target: dev
+    build: api
     stdin_open: true
     tty: true
     depends_on:
